@@ -2,15 +2,10 @@ package pages;
 
 import base.Base;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
+import support.Commons;
 import support.Utilities;
 
 public class BooksByAuthor extends Base {
-
-//    *** Fixed ***
 
     By booksPageAd = By.xpath("//img[@alt='close']");
     By sortBestSellerRadio = By.xpath("//label[normalize-space()='Best Seller']");
@@ -23,21 +18,22 @@ public class BooksByAuthor extends Base {
     By addToCartButton = By.xpath("//body[1]/div[6]/div[1]/div[1]/div[1]/section[2]/div[2]/div[1]/div[1]/div[1]/a[1]/div[1]/div[2]/button[1]");
 
     Utilities utils = new Utilities();
+    Commons common = new Commons();
 
     /**
      * Will filter books by different criteria
      */
     public void filterBooks(){
-        utils.closeAd(booksPageAd);
+        common.closeAd(booksPageAd);
 
-        driver.findElement(sortBestSellerRadio).click();
-        driver.findElement(inStockCheckBox).click();
+        utils.getWebElement(sortBestSellerRadio).click();
+        utils.getWebElement(inStockCheckBox).click();
 
         utils.scrollToElement(filterChirayotoUponnash);
-        driver.findElement(filterChirayotoUponnash).click();
+        utils.getWebElement(filterChirayotoUponnash).click();
 
         utils.scrollToElement(publisherBisshawShahittoKendro);
-        driver.findElement(publisherBisshawShahittoKendro).click();
+        utils.getWebElement(publisherBisshawShahittoKendro).click();
 
     }
 
@@ -46,7 +42,7 @@ public class BooksByAuthor extends Base {
      * @return an object of BookDetails page
      */
     public BookDetails viewDetails(){
-        utils.viewBookDetails(shesherKobiatBookDetailsBtn);
+        common.viewBookDetails(shesherKobiatBookDetailsBtn);
 
         return new BookDetails();
     }

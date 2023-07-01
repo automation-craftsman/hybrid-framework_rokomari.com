@@ -2,7 +2,6 @@ package pages;
 
 import base.Base;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.Select;
 import support.Utilities;
 
 public class ShippingPage extends Base {
@@ -24,24 +23,25 @@ public class ShippingPage extends Base {
 			""";
 
 	public void fillOutFormDetails(){
-		driver.findElement(nameField).clear();
-		driver.findElement(nameField).sendKeys(prop.getProperty("name"));
+		utils.getWebElement(nameField).clear();
+		utils.getWebElement(nameField).sendKeys(prop.getProperty("name"));
 
-		driver.findElement(phoneField).click();
-		driver.findElement(phoneField).sendKeys(prop.getProperty("phone"));
+		utils.getWebElement(phoneField).click();
+		utils.getWebElement(phoneField).sendKeys(prop.getProperty("phone"));
 
 		utils.selectFromDropdownByVisibleText(cityDropDown, "ঢাকা");
 
 		utils.selectFromDropdownByVisibleText(areaDropDown, "বনশ্রী");
 
-		driver.findElement(addressField).sendKeys(address);
-		driver.findElement(bKash).click();
-		driver.findElement(ackCheckBox).click();
+		utils.getWebElement(addressField).sendKeys(address);
+		utils.getWebElement(bKash).click();
+		utils.getWebElement(ackCheckBox).click();
 
 	}
 
 	public void confirmOrder(){
-		driver.findElement(confirmBtn).click();
+
+		System.out.println("Pressing " + utils.getWebElement(confirmBtn).getText() + "button...");
 	}
 
 }

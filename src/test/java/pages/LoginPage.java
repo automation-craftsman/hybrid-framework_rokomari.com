@@ -2,22 +2,19 @@ package pages;
 
 import base.Base;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import support.Utilities;
 
 public class LoginPage extends Base {
 
-//    *** Fixed ***
-
     Utilities utils = new Utilities();
 
     By googleBtn = By.xpath("//button[normalize-space()='Google']");
-    By googleEmail = By.xpath("(//div[@class='WBW9sf'])[1]");
-    By emailPassword = By.xpath("//input[@name='password']");
-    By nextBtn = By.xpath("//span[normalize-space()='Next']");
+
+    By otherEmailSignInBtn = By.xpath("//div[@class='BHzsHc']");
+    By emailField = By.xpath("//input[@id='identifierId']");
+    By afterEmailIDNextBtn = By.xpath("//span[normalize-space()='Next']");
+    By passwordField = By.xpath("//input[@name='Passwd']");
+    By afterPasswordNextBtn = By.xpath("//span[normalize-space()='Next']");
 
 
     /**
@@ -25,10 +22,23 @@ public class LoginPage extends Base {
      */
     public void signInWithGmail(){
 
-        driver.findElement(googleBtn).click();
-        driver.findElement(googleEmail).click();
-        driver.findElement(emailPassword).sendKeys(prop.getProperty("loginPassword"));
-        driver.findElement(nextBtn).click();
+        utils.getWebElement(googleBtn).click();
+
+//        if (utils.getWebElement(otherEmailSignInBtn).isDisplayed()){
+//            utils.getWebElement(otherEmailSignInBtn).click();
+//        }else {
+//            System.out.println("No active email found. Logging in for the first time.");
+//        }
+
+        utils.getWebElement(emailField).clear();
+        utils.getWebElement(emailField).sendKeys(prop.getProperty("emailID"));
+        utils.getWebElement(afterEmailIDNextBtn).click();
+
+        utils.waitForElement(passwordField);
+
+        utils.getWebElement(passwordField).clear();
+        utils.getWebElement(passwordField).sendKeys(prop.getProperty("loginPassword"));
+        utils.getWebElement(afterPasswordNextBtn).click();
 
     }
 }

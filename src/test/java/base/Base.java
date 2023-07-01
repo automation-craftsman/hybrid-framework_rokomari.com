@@ -10,8 +10,6 @@ import java.util.Properties;
 
 public class Base {
 
-//    *** Fixed ***
-
 	/**
 	 * Loaded the config.properties file.
 	 */
@@ -76,8 +74,8 @@ public class Base {
 	@BeforeSuite
 	public static synchronized void setUp() {
 		driver = getBrowser(prop.getProperty("browser"));
-		driver.get(prop.getProperty("url"));
 		driver.manage().window().maximize();
+		driver.get(prop.getProperty("url"));
 	}
 
 	/**
@@ -85,6 +83,7 @@ public class Base {
 	 */
 	@AfterSuite
 	public static synchronized void cleanUp() {
+
 		getDriver().quit();
 	}
 

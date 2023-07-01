@@ -2,20 +2,20 @@ package pages;
 
 import base.Base;
 import org.openqa.selenium.By;
+import support.Commons;
 import support.Utilities;
 
 public class HomePage extends Base {
 
-//    *** Fixed ***
-
     By homePageAd = By.xpath("//img[@alt='close']");
     By homePageSignInButton = By.xpath("//a[normalize-space()='Sign in']");
-    By loggedUserMenu = By.xpath("//a[@id='dropdownMenu2']");
     By loggedUserName = By.xpath("//span[@class='user-name']");
     By authorHeader = By.xpath("//a[@id='js--authors']");
     By authorName = By.xpath("//a[contains(text(),'রবীন্দ্রনাথ ঠাকুর')]");
+    By signOutBtn = By.xpath("//a[normalize-space()=\"Sign Out\"]");
 
     Utilities utils = new Utilities();
+    Commons common = new Commons();
 
     /**
      * This method checks whether the user is logged in or not
@@ -23,18 +23,18 @@ public class HomePage extends Base {
      * and log in accordingly
      */
     public void checkLogin(){
-        utils.closeAd(homePageAd);
+        common.closeAd(homePageAd);
 
-        if (driver.findElement(homePageSignInButton).isDisplayed()){
+        if (utils.getWebElement(homePageSignInButton).isDisplayed()){
 
-            driver.findElement(homePageSignInButton).click();
+            utils.getWebElement(homePageSignInButton).click();
 
             LoginPage loginPage = new LoginPage();
 
             loginPage.signInWithGmail();
 
         }else {
-            System.out.println(utils.getLoggedUserName(loggedUserName) + " already logged in.");
+            System.out.println(common.getLoggedUserName(loggedUserName) + " already logged in.");
         }
 
     }
@@ -45,12 +45,21 @@ public class HomePage extends Base {
      * @return an object od the BooksByAuthor page
      */
     public BooksByAuthor selectBookByRabindranath(){
-        utils.closeAd(homePageAd);
+        common.closeAd(homePageAd);
 
         var action = utils.hoverOverElement(authorHeader);
-        action.moveToElement(driver.findElement(authorName)).click().perform();
+        action.moveToElement(utils.getWebElement(authorName)).click().perform();
 
         return new BooksByAuthor();
+    }
+
+    public void logOut(){
+        if (utils.getWebElement(loggedUserName).isDisplayed()){
+            utils.getWebElement(loggedUserName).click();
+            utils.getWebElement(signOutBtn).click();
+        }else {
+            System.out.println("No logged user found.");
+        }
     }
 
 }

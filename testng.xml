@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="hybrid-framework_rokomari.com">
+<suite name="Master Test Suite">
+    <test verbose="2" preserve-order="true" name="rokomari.com_automation">
         <classes>
-            <class name="tests.CartTests">
+            <class name="tests.T001_LoginTests">
                 <methods>
-                    <include name="addBookToCartTest"/>
+                    <include name="gmailLoginTest"/>
                 </methods>
             </class>
-            <class name="tests.LoginTests">
+            <class name="tests.T002_PurchaseTests">
                 <methods>
-                    <include name="logInWithInvalidData"/>
-                    <include name="logInWithValidData"/>
+                    <include name="selectBookTest"/>
+                    <include name="bookCheckoutTest"/>
+                </methods>
+            </class>
+            <class name="tests.T003_LogoutTests">
+                <methods>
+                    <include name="logoutUserTest"/>
                 </methods>
             </class>
         </classes>
