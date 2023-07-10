@@ -11,21 +11,22 @@ public class CartPage extends Base {
 
 	Utilities utils = new Utilities();
 
-	By cartBookList = By.xpath("//div[contains(@class,'cart-item js--cart-product-item cart-checked')]");
-	By placeOrderBtn = By.xpath("(//span[normalize-space()='Place Order'])[1]");
+	private By cartBookList = By.xpath("//div[@class='book-info__content--book-meta']");
+	private By placeOrderBtn = By.xpath("(//span[normalize-space()='Place Order'])[1]");
 
 	public void getCartList(){
 
 		List<WebElement> bookList = utils.getListOfWebElements(cartBookList);
-
+		System.out.println("[-] CartPage : Found the following books in the cart list: ");
 		for (WebElement book : bookList){
-			System.out.println(book);
+			System.out.println(book.getText());
 		}
 
 	}
 
 	public ShippingPage placeOrder(){
 
+		System.out.println("[-] CartPage : Placing order...");
 		utils.getWebElement(placeOrderBtn).click();
 
 		return new ShippingPage();

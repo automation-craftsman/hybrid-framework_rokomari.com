@@ -7,58 +7,40 @@ import support.Utilities;
 
 public class HomePage extends Base {
 
-    By homePageAd = By.xpath("//img[@alt='close']");
-    By homePageSignInButton = By.xpath("//a[normalize-space()='Sign in']");
-    By loggedUserName = By.xpath("//span[@class='user-name']");
-    By authorHeader = By.xpath("//a[@id='js--authors']");
-    By authorName = By.xpath("//a[contains(text(),'রবীন্দ্রনাথ ঠাকুর')]");
-    By signOutBtn = By.xpath("//a[normalize-space()=\"Sign Out\"]");
+    private By homePageAd = By.xpath("//img[@alt='close']");
+    private By homePageSignInButton = By.xpath("//a[normalize-space()='Sign in']");
+    private By userNameButton = By.xpath("//span[@class='user-name']");
+    private By authorSubMenu = By.xpath("//a[@id='js--authors']");
+    private By authorName = By.xpath("//a[contains(text(),'রবীন্দ্রনাথ ঠাকুর')]");
+    private By signOutBtn = By.xpath("//a[normalize-space()='Sign Out']");
 
     Utilities utils = new Utilities();
     Commons common = new Commons();
 
-    /**
-     * This method checks whether the user is logged in or not
-     * If user is already logged in then it will not try otherwise it will call the login function from the LoginPage
-     * and log in accordingly
-     */
-    public void checkLogin(){
-        common.closeAd(homePageAd);
-
-        if (utils.getWebElement(homePageSignInButton).isDisplayed()){
-
-            utils.getWebElement(homePageSignInButton).click();
-
-            LoginPage loginPage = new LoginPage();
-
-            loginPage.signInWithGmail();
-
-        }else {
-            System.out.println(common.getLoggedUserName(loggedUserName) + " already logged in.");
-        }
-
-    }
-
 
     /**
      * Will select books of Rabindranath and
-     * @return an object od the BooksByAuthor page
+     * @return an object of the BooksByAuthor page
      */
-    public BooksByAuthor selectBookByRabindranath(){
+    public BooksByAuthorPage selectBookByRabindranath(){
         common.closeAd(homePageAd);
 
-        var action = utils.hoverOverElement(authorHeader);
-        action.moveToElement(utils.getWebElement(authorName)).click().perform();
+        System.out.println("[-] HomePage : Selecting 'Rabindranath Tagore' from Author's list");
+        utils.hoverOverElement(authorSubMenu);
+        utils.getWebElement(authorName).click();
 
-        return new BooksByAuthor();
+        return new BooksByAuthorPage();
     }
 
     public void logOut(){
-        if (utils.getWebElement(loggedUserName).isDisplayed()){
-            utils.getWebElement(loggedUserName).click();
+        common.closeAd(homePageAd);
+
+        if (utils.getWebElement(userNameButton).isDisplayed()){
+            System.out.println("[-] HomePage : Logging out active user.");
+            utils.getWebElement(userNameButton).click();
             utils.getWebElement(signOutBtn).click();
         }else {
-            System.out.println("No logged user found.");
+            System.out.println("[-] HomePage : No active user logged in.");
         }
     }
 

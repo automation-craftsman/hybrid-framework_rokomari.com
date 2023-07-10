@@ -2,11 +2,14 @@ package base;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
 import java.io.FileInputStream;
+import java.time.Duration;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class Base {
 
@@ -39,7 +42,11 @@ public class Base {
 	public static WebDriver getBrowser(String browser) {
 
 		if (browser.equalsIgnoreCase("Chrome")) {
-			driver = WebDriverManager.chromedriver().create();
+
+			ChromeOptions options = new ChromeOptions();
+			options.setExperimentalOption("debuggerAddress", "127.0.0.1:9222");
+
+			driver = WebDriverManager.chromedriver().capabilities(options).create();
 			setDriver(driver);
 
 		} else if (browser.equalsIgnoreCase("Firefox")) {
@@ -47,7 +54,7 @@ public class Base {
 			setDriver(driver);
 
 		} else {
-			System.out.println("[!]Invalid option provided. Initiating Chrome driver as default.");
+			System.out.println("[!] Invalid option provided. Initiating Chrome driver as default.");
 			driver = WebDriverManager.chromedriver().create();
 			setDriver(driver);
 		}
@@ -61,12 +68,11 @@ public class Base {
 	public static void loadProperties() {
 		prop = new Properties();
 		try {
-			FileInputStream fis = new FileInputStream(System.getProperty("user.dir") +
-					"\\src\\test\\config\\config.properties");
+			FileInputStream fis = new FileInputStream(".\\src\\test\\config\\config.properties");
 			prop.load(fis);
 
 		} catch (Exception e) {
-			System.out.println("[!] Some error occurred while loading the config file.");
+			System.out.println("[!] Error loading the config file.");
 		}
 
 	}
@@ -74,7 +80,8 @@ public class Base {
 	@BeforeSuite
 	public static synchronized void setUp() {
 		driver = getBrowser(prop.getProperty("browser"));
-		driver.manage().window().maximize();
+//		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		driver.get(prop.getProperty("url"));
 	}
 

@@ -43,15 +43,24 @@ public class Utilities extends Base {
         return listOfElements;
     }
 
-    public void waitForElement(By locator){
+    public void waitForElement(By locator, int durationInSecond){
         WebElement elm = getWebElement(locator);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(durationInSecond));
         wait.until(ExpectedConditions.visibilityOf(elm));
     }
 
-    public void scrollToElement(By locator){
+    public void holdOn(int durationInSecond) {
+        try {
+            driver.wait(durationInSecond);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void scrollToElement(By locator) {
         WebElement elm = getWebElement(locator);
         js.executeScript("arguments[0].scrollIntoView(true);", elm);
+
     }
 
     /**
@@ -69,15 +78,15 @@ public class Utilities extends Base {
 
         }else {
             System.out.println("[!] Invalid parameter given. Scrolling to the bottom of the page by default.");
-            js.executeScript("0, window.scrollTo(document.body.scrollHeight)");
+            js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
         }
 
     }
 
-    public Actions hoverOverElement(By locator){
+    public void hoverOverElement(By locator){
         WebElement elm = getWebElement(locator);
         act = new Actions(driver);
-        return act.moveToElement(elm);
+        act.moveToElement(elm).perform();
     }
 
     public void selectFromDropdownByVisibleText(By locator, String text){

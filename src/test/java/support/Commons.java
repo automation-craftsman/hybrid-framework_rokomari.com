@@ -14,7 +14,7 @@ public class Commons extends Base {
      */
     public void closeAd(By locator){
         try {
-            utils.waitForElement(locator);
+            utils.waitForElement(locator, 3);
 
             WebElement element = utils.getWebElement(locator);
 
@@ -25,15 +25,6 @@ public class Commons extends Base {
             System.out.println("[i] Homepage Ad is not present.");
         }
 
-    }
-
-    /**
-     *
-     * @param locator takes the book locator to view the details
-     */
-    public void viewBookDetails(By locator){
-
-        utils.getWebElement(locator).click();
     }
 
     /**

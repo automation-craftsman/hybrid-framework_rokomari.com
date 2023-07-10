@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Master Test Suite">
+<suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="rokomari.com_automation">
         <classes>
-            <class name="tests.T001_LoginTests">
+            <class name="tests.T001_TestBookFilter">
                 <methods>
-                    <include name="gmailLoginTest"/>
+                    <include name="filterBookTest"/>
                 </methods>
             </class>
-            <class name="tests.T002_PurchaseTests">
+            <class name="tests.T002_TestBookSelection">
                 <methods>
                     <include name="selectBookTest"/>
+                </methods>
+            </class>
+            <class name="tests.T003_TestPurchaseOrderAndCheckout">
+                <methods>
                     <include name="bookCheckoutTest"/>
                 </methods>
             </class>
-            <class name="tests.T003_LogoutTests">
+            <class name="tests.T004_TestUserLogout">
                 <methods>
                     <include name="logoutUserTest"/>
                 </methods>
